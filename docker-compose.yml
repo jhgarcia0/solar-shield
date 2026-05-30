@@ -24,3 +24,17 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+
+  ingestor:
+    build: ./src/ingestor
+    container_name: solar-ingestor
+    environment:
+      - NASA_API_KEY=DEMO_KEY
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
