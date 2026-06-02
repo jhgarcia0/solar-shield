@@ -21,6 +21,22 @@ function classifySeverity(kpIndex) {
   return { severity: 'severe', emergencyNotification: true };
 }
 
+// busca NASA com retry e backoff exponencial
+async function fetchWithRetry(url, maxRetries = 3) {
+  let delay = 1000;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await axios.get(url, { timeout: 10000 });
+      return res.data;
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      console.log(`[ingestor] tentativa ${attempt}/${maxRetries} falhou, aguardando ${delay}ms...`);
+      await new Promise(r => setTimeout(r, delay));
+      delay *= 2;
+    }
+  }
+}
+
 // conecta ao RabbitMQ com retry (ele demora um pouco pra subir)
 async function connectRabbitMQ(retries = 10) {
   for (let i = 1; i <= retries; i++) {
@@ -48,8 +64,7 @@ app.post('/ingest/gst', async (req, res) => {
     const url = `https://api.nasa.gov/DONKI/GST?startDate=${startDate}&api_key=${NASA_API_KEY}`;
     console.log(`[ingestor] buscando dados da NASA a partir de ${startDate}...`);
 
-    const response = await axios.get(url, { timeout: 10000 });
-    const events = response.data;
+    const events = await fetchWithRetry(url);
 
     if (!events || events.length === 0) {
       return res.json({ message: 'nenhum evento GST encontrado no período', published: 0 });
