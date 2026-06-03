@@ -1,0 +1,13 @@
+{
+  "name": "solar-shield-alert-service",
+  "version": "1.0.0",
+  "description": "Serviço de alertas de clima espacial",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "express": "^4.18.2"
+  }
+}

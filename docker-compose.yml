@@ -38,3 +38,19 @@ services:
       rabbitmq:
         condition: service_healthy
     restart: on-failure
+
+  alert-service:
+    build: ./src/alert-service
+    container_name: solar-alert-service
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - REDIS_URL=redis://redis:6379
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
