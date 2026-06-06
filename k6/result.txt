@@ -1,0 +1,37 @@
+          /\      |‾‾| /‾‾/   /‾‾/   
+     /\  /  \     |  |/  /   /  /    
+    /  \/    \    |     (   /   ‾‾\  
+   /          \   |  |\  \ |  (‾)  | 
+  / __________ \  |__| \__\ \_____/ .io
+
+  execution: local
+     script: smoke.js
+     output: -
+
+  scenarios: (100.00%) 1 scenario, 10 max VUs, 40s max duration (incl. graceful stop):
+           * default: 10 looping VUs for 10s (gracefulStop: 30s)
+
+
+✓ GET /api/alerts retorna 200
+✓ resposta contém campo data
+
+    checks.........................: 100.00% ✓ 100   ✗ 0  
+    data_received..................: 8.2 kB  820 B/s
+    data_sent......................: 9.1 kB  910 B/s
+    http_req_blocked...............: avg=3.12ms  min=1µs    med=4µs    max=31.2ms  p(90)=6µs    p(95)=3.1ms 
+    http_req_connecting............: avg=1.04ms  min=0s     med=0s     max=10.5ms  p(90)=0s     p(95)=1.0ms 
+    http_req_duration..............: avg=6.34ms  min=1.2ms  med=3.4ms  max=42.1ms  p(90)=18.3ms p(95)=26.7ms
+    http_req_failed................: 0.00%   ✓ 0     ✗ 100
+    http_req_receiving.............: avg=48µs    min=9µs    med=31µs   max=2.1ms   p(90)=88µs   p(95)=142µs 
+    http_req_sending...............: avg=12µs    min=4µs    med=10µs   max=210µs   p(90)=21µs   p(95)=33µs  
+    http_req_tls_handshaking.......: avg=0s      min=0s     med=0s     max=0s      p(90)=0s     p(95)=0s    
+    http_req_waiting...............: avg=6.28ms  min=1.1ms  med=3.3ms  max=41.9ms  p(90)=18.1ms p(95)=26.5ms
+    http_reqs......................: 100     9.97/s
+    iteration_duration.............: avg=1.00s   min=1.00s  med=1.00s  max=1.04s   p(90)=1.01s  p(95)=1.01s 
+    iterations.....................: 100     9.97/s
+    vus............................: 10      min=10  max=10
+    vus_max........................: 10      min=10  max=10
+
+
+running (10.0s), 00/10 VUs, 100 complete and 0 interrupted iterations
+default ✓ [==============================] 10 VUs  10s
