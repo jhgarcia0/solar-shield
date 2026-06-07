@@ -156,7 +156,7 @@ O **Ingestor** usa retry com backoff exponencial na chamada à NASA:
 - Tentativa 2 → espera 2s
 - Tentativa 3 → erro propagado
 
-Ambos os serviços também reententam a conexão com o RabbitMQ durante o startup, com 10 tentativas e intervalo de 3s entre cada uma.
+Ambos os serviços também reentam a conexão com o RabbitMQ durante o startup, com 10 tentativas e intervalo de 3s entre cada uma.
 
 ---
 
