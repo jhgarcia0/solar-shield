@@ -81,3 +81,81 @@ curl http://localhost/api/alerts
 Observe no log do `alert-service` as linhas `cache HIT` e `cache MISS`.
 
 ---
+
+## Regras de Negócio
+
+**RN1 — Severidade de tempestade geomagnética:**
+
+| Índice Kp | Severidade | emergencyNotification |
+|-----------|------------|----------------------|
+| Kp ≤ 4 | `low` | `false` |
+| 5 ≤ Kp ≤ 7 | `moderate` | `false` |
+| Kp ≥ 8 | `severe` | `true` |
+
+**RN3 — Idempotência:**
+- Eventos com o mesmo `event_id` recebidos mais de uma vez são descartados
+- Um log de duplicata é registrado no console do `alert-service`
+
+---
+
+## Testes unitários
+
+```bash
+cd tests
+npm install
+npm test
+```
+
+Cobre RN1 (3 cenários de severidade) e RN3 (rejeição de duplicata).
+
+---
+
+## Smoke test k6
+
+```bash
+# com k6 instalado localmente (infraestrutura rodando)
+k6 run k6/smoke.js
+
+# via Docker (na mesma rede dos containers)
+docker run --rm -i --network solar-shield_default \
+  -e BASE_URL=http://nginx \
+  grafana/k6 run - < k6/smoke.js
+```
+
+O resultado de uma execução está em `k6/result.txt`.
+
+---
+
+## Rate Limiting
+
+O Nginx limita **10 requisições por segundo por IP**, com burst de 5. Requisições que excedem o limite recebem HTTP **429 Too Many Requests**.
+
+Para testar:
+
+```bash
+# dispara 20 requisições em paralelo para ver o rate limiting em ação
+for i in $(seq 1 20); do curl -s -o /dev/null -w "%{http_code}\n" http://localhost/api/alerts & done; wait
+```
+
+---
+
+## RabbitMQ Management UI
+
+Acesse `http://localhost:15672` (login: `guest` / senha: `guest`) para visualizar:
+- A fila `space_events`
+- Mensagens publicadas e consumidas
+- Taxa de throughput
+
+---
+
+## Resiliência
+
+O **Ingestor** usa retry com backoff exponencial na chamada à NASA:
+
+- Tentativa 1 → espera 1s
+- Tentativa 2 → espera 2s
+- Tentativa 3 → erro propagado
+
+Ambos os serviços também reententam a conexão com o RabbitMQ durante o startup, com 10 tentativas e intervalo de 3s entre cada uma.
+
+---
