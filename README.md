@@ -159,3 +159,13 @@ O **Ingestor** usa retry com backoff exponencial na chamada à NASA:
 Ambos os serviços também reententam a conexão com o RabbitMQ durante o startup, com 10 tentativas e intervalo de 3s entre cada uma.
 
 ---
+
+## Equipe
+
+| Nome | GitHub |
+|------|--------|
+| João Henrique Garcia | [@jhgarcia0](https://github.com/jhgarcia0) |
+| Mateus Bessornia | [@mbessornia](https://github.com/mbessornia) |
+| Luan Rodrigues | [@LuanRodrigues15](https://github.com/LuanRodrigues15) |
+
+**FIAP · Global Solution 2026.1 · Microservice and Web Engineering**
