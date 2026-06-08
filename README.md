@@ -162,10 +162,10 @@ Ambos os serviços também reentam a conexão com o RabbitMQ durante o startup, 
 
 ## Equipe
 
-| Nome | GitHub |
-|------|--------|
-| João Henrique Garcia | [@jhgarcia0](https://github.com/jhgarcia0) |
-| Mateus Bessornia | [@mbessornia](https://github.com/mbessornia) |
-| Luan Rodrigues | [@LuanRodrigues15](https://github.com/LuanRodrigues15) |
+| RM | Nome | GitHub | 
+|------|------|--------|
+| 552737 | João Henrique Garcia | [@jhgarcia0](https://github.com/jhgarcia0) |
+| 552730 | Mateus Bessornia | [@mbessornia](https://github.com/mbessornia) |
+| 553841 | Luan Rodrigues | [@LuanRodrigues15](https://github.com/LuanRodrigues15) |
 
 **FIAP · Global Solution 2026.1 · Microservice and Web Engineering**
